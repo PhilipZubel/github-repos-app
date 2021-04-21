@@ -1,0 +1,15 @@
+<h2>GitHub API</h2>
+<form method="get">
+    <input type="text" name="username">
+    <button type="submit">Search github user</button>
+</form>
+{% if success %}
+<p>
+    <strong>{{ response.name|default_if_none:response.login }}</strong> has
+    <strong>{{ response.public_repos }}</strong> public repositories.
+</p>
+{% else %}
+hi
+<p><em>{{ response.message }}</em></p>
+{% endif %}
+<p>Rate limit: {{ rate.remaining }}/{{ rate.limit }}</p>
