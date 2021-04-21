@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     # my apps 
     'github_users.apps.GithubUsersConfig',
+
 ]
 
 MIDDLEWARE = [
