@@ -1,3 +1,50 @@
-* {
-  background-color: red;
+body {
+  background-color: #fbfbfb !important;
+}
+
+.container {
+  margin: 0 20%;
+  justify-content: center;
+  text-align: center;
+}
+
+header {
+  margin-top: 2%;
+}
+
+header .heading {
+  margin: 30px 0;
+  font-size: 1.5rem;
+}
+
+header form {
+  max-width: 300px;
+  margin: 10px auto;
+}
+
+section {
+  margin: 30px 0 !important;
+}
+
+.card-section .row .col-6 .card {
+  max-width: 20rem;
+  padding: 1rem 0;
+  font-size: 1.2rem;
+  text-align: left;
+  margin: 0 auto;
+}
+
+.repo-table {
+  width: 60%;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    margin: 0 10%;
+  }
+
+  .repo-table {
+    width: 90%;
+  }
 }

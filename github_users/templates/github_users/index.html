@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
 {% load static %}
 
@@ -21,55 +22,126 @@
 </head>
 
 <body>
-    <h1>GitHub API</h1>
-    <form class="d-flex" method="get">
-        <input id="nav-input" class="form-control" type="text" name="username" placeholder="Search github user..."
-            aria-label="Search">
-        <button id="nav-search-button" class="btn" type="submit"><i class="fa fa-search"></i></button>
+    <div class='container'>
+        <!-- heading and the search imput -->
+        <header>
+            <h1 class="heading">GitHub API - Get User's Repositories</h1>
+            <form class="d-flex" method="get">
+                <input id="search-input" class="form-control" type="text" name="username"
+                    placeholder="Search github username..." value='{{username}}' aria-label="Search">
+                <button id="search-button" class="btn btn-success ms-2" type="submit"><i
+                        class="fa fa-search"></i></button>
+            </form>
+        </header>
+        <!-- for a successful response, display cards showing the number of repos and 
+            the total number of stars -->
+        {% if GET_request_exists %}
+        {% if success %}
+        <section class="card-section">
+            <div class="row justify-content-center">
+                <div class="col-6 col-sm-5 col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2 col-md-1">
+                                    <i class="fa fa-github" style="color:purple" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-10 col-md-11">
+                                    <strong>{{ response.name|default_if_none:response.login }}</strong> has
+                                    <strong style="color:purple">{{ response.public_repos }}</strong> public
+                                    {% if response.public_repos == 1 %}
+                                    repository.
+                                    {% else %}
+                                    repositories.
+                                    {% endif %}
+                                </div>
+                            </div>
 
-    </form>
 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-5 col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2 col-md-1">
+                                    <i class="fa fa-star" style="color:gold" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-10 col-md-11">
+                                    <strong>{{ response.name|default_if_none:response.login }}</strong> has a
+                                    combined total of
+                                    <strong style="color:rgb(230, 195, 0)">{{ stars_count }}</strong>
+                                    repository stars.
+                                </div>
 
-    {% if success %}
-    <p>
-        <strong>{{ response.name|default_if_none:response.login }}</strong> has
-        <strong>{{ response.public_repos }}</strong> public repositories.
-    </p>
-    <p>
-        <strong>{{ response.name|default_if_none:response.login }}</strong> has
-        <strong>{{ stars_count }}</strong>
-        {% if stars_count == 1 %}
-        star.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- for a successul response, display a table with repo name, repo star count, and a 
+                    button which links to the repo's website -->
+        <section class="repository-section">
+            <div class="repo-table">
+                <table class="table table-sm table-hover caption-top">
+                    <caption>{{ response.name|default_if_none:response.login }}'s Repositories:</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Repository Name <i class="fa fa-book" aria-hidden="true"></i></th>
+                            <th scope="col">Stars <i class="fa fa-star" style="color:gold" aria-hidden="true"></i>
+                            </th>
+                            <th scope="col">Link <i class="fa fa-link" aria-hidden="true"></i>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for repo_name, repo_values in repos.items %}
+                        <tr>
+                            <th scope="row"> {{forloop.counter}}</th>
+                            <td>{{ repo_name }}</td>
+                            <td>{{ repo_values.stars }}</td>
+                            <td><a type="button" class="btn btn-sm btn-info" href="{{ repo_values.url }}"
+                                    target="_blank">Go
+                                    to
+                                    Repo</a></td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
         {% else %}
-        stars.
-        {% endif %}
-    </p>
 
-    <div>
-        <h2>Repositories:</h2>
-        {% for repo_name, repo_values in repos.items %}
-        {{ repo_name }}
-        {{ repo_values.url }}
-        {{ repo_values.stars }}
-        <br />
-        {% endfor %}
+        <p><em>Username <strong>{{ username }}</strong> not found. Please enter a different username.</em></p>
+
+        {% endif %}
+
+        <footer class="justify-content-center">
+            <p><em>API calls remaining:
+                    <strong>{{ rate.remaining }}/{{ rate.max }}</strong>.
+                    The number of calls made to the API resets on an hourly rate.
+                </em></p>
+        </footer>
+        <!-- no GET request made -->
+        {% else %}
+        <p style="margin: 25px 0;"><em>By entering a valid github username above, you will see details
+                about the user's repositories.
+
+            </em></p>
+        {% endif %}
 
     </div>
-
-    {% else %}
-
-    <p><em>Username not found. Please try again.</em></p>
-    {% endif %}
-    <p>Rate limit: {{ rate.remaining }}/{{ rate.max }}</p>
-
-
-
 
 
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+    <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
 
