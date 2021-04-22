@@ -22,7 +22,7 @@ After entering a valid github username, you will see:
 ```bash
 pip install -r requirements.txt 
 ```
-- open a terminal, activate your environment, go into the directory which contains the mangage.py file and run the following command: 
+- open a terminal, activate your environment, go into the directory which contains the manage.py file and run the following command: 
 ```bash
 python manage.py runserver
 ```
