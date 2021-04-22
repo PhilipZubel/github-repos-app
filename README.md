@@ -18,7 +18,7 @@ After entering a valid github username, you will see:
 
 ## How to run the project:
 - clone the project on your local machine
-- create a virtual environment and install the dependencies listed in the requirements.txt file (on a linux machine the dependencies can be imported using the following command: 
+- create a virtual environment and install the dependencies listed in the requirements.txt file. On a linux machine the dependencies can be imported using the following command: 
 ```bash
 pip install -r requirements.txt 
 ```
