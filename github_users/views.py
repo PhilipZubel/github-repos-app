@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import requests
 
+# this view handles the username GET request and displays data about the user searched for  
 def index(request):
     # values passed to the template will be stored in context dictionary
     context = {}
@@ -10,7 +11,7 @@ def index(request):
         context['GET_request_exists'] = True
         username = request.GET['username']
         context['username'] = username
-        # url accessed to get a response
+        # url for the api call
         url = 'https://api.github.com/users/%s' % username
         # get the response from the api
         response = requests.get(url)
@@ -18,7 +19,7 @@ def index(request):
         # if response is 200 then it is successful 
         is_search_successful = (response.status_code == 200)
         context['success'] = is_search_successful
-        # there exists a limited number of calls that can be done in an hour
+        # there exists a limited number of calls that can be made in an hour
         # the maximum number of responses and the remaining number of responses
         # are strored in context:'rate' 
         context['rate'] = {
@@ -28,16 +29,17 @@ def index(request):
 
         context['response'] = response.json()
         
-        # get the values for each repository if the api call is successful
+        # get the values for each repository if the first api call is successful
         if is_search_successful:
             # get a response from the url which contains data about repositories
             url_repos = context['response']['repos_url']
             response_repos = requests.get(url_repos)
-
+            
+            response_repos_json = response_repos.json()
             # get total number of stars
-            context['stars_count'] = getTotalStargazerCount(response_repos.json())
+            context['stars_count'] = getTotalStargazerCount(response_repos_json)
             # get repository names, stars, and urls
-            context['repos'] = getGitHubRepositories(response_repos.json())
+            context['repos'] = getGitHubRepositories(response_repos_json)
 
             # update the remaining responses count since a new response was created
             context['rate']['remaining'] = response_repos.headers['X-RateLimit-Remaining']
