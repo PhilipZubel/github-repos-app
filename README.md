@@ -13,7 +13,7 @@ After entering a valid github username, you will see:
 ## Technologies used:
 - the application was built using the Django REST framework which is based on the Python programming language. 
 - Bootstrap 5 was used for styling the app. 
-- fontawesome was used for importing icons. 
+- Fontawesome was used for importing icons. 
 - the github api used for this project has the following link: https://api.github.com/
 
 ## How to run the project:
@@ -32,3 +32,7 @@ python manage.py runserver
 - The number of API calls is limited for anonymous users to only 60 calls per hour. This value can be increased if the appliaction provides login functionality for a user (a github user can perform 5000 calls per hour). 
 - Two API calls are made to retrieve information about the user and the repositories. Since the number of calls is limited, it would be useful if the two calls could be merged into one.
 
+## Screenshots of the app:
+![alt text](https://github.com/PhilipZubel/github-repos-app/blob/main/screenshots_readme/screenshot1.PNG)
+
+![alt text](https://github.com/PhilipZubel/github-repos-app/blob/main/screenshots_readme/screenshot2.PNG)
