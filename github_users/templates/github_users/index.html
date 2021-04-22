@@ -117,7 +117,7 @@
 
         {% else %}
 
-        <p><em>Username <strong>{{ username }}</strong> not found. Please enter a different username.</em></p>
+        <p><em>Username <strong>{{ username }}</strong> not found. Please enter a valid username.</em></p>
 
         {% endif %}
 
@@ -129,8 +129,8 @@
         </footer>
         <!-- no GET request made -->
         {% else %}
-        <p style="margin: 25px 0;"><em>By entering a valid github username above, you will see details
-                about the user's repositories.
+        <p style="margin: 25px 0;"><em>Enter a valid github username to see a list of repositories and corresponding
+                star counts.
 
             </em></p>
         {% endif %}
